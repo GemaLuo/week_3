@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>Week 1 Assignment Wen Jun Luo</title>
+    <link href="WJLuo_week3_style.css" rel="stylesheet" type="text/css" media="all"/>
+</head>
+<body onload="getData()" >
+    <div class="menu">
+        <div class="headline">My Website</div>
+        <div class="item">Item 1</div>
+        <div class="item">Item 2</div>
+        <div class="item">Item 3</div>
+        <div class="item">Item 4</div>
+        <div class="mobile-menu">
+            <img src="icon.png" width="30" height="30"/>
+        </div>
+    </div>
+
+    <div class="welcome">
+        <div class="banner">Welcome to MyHome</div>
+    </div>
+
+    <div class="all">
+        <div class="all-content">
+            <div class="promotion">
+                <div class="promo-left">
+                    <div class="promo-pic">
+                       <div id="pic1"></div>
+                    </div>
+                    <div class="promo-box">
+                        <div class="txt">
+                            <div id="spot1"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="promo-right">
+                    <div class="promo-pic">
+                        <div id="pic2"></div>
+                    </div>
+                    <div class="promo-box">
+                        <div class="txt">
+                            <div id="spot2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pics">
+                <div class="main1">
+                    <div class="main-pic">
+                        <div id="pic3"></div>
+                    </div>
+                    <div class="title">
+                        <div class="title-txt">
+                            <div id="spot3"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main2">
+                    <div class="main-pic">
+                        <div id="pic4"></div>
+                    </div>
+                    <div class="title">
+                        <div class="title-txt">
+                            <div id="spot4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main3">
+                    <div class="main-pic">
+                        <div id="pic5"></div>
+                    </div>
+                    <div class="title">
+                        <div class="title-txt">
+                            <div id="spot5"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main4">
+                    <div class="main-pic">
+                        <div id="pic6"></div>
+                    </div>
+                    <div class="title">
+                        <div class="title-txt">
+                            <div id="spot6"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pics">
+                <div class="main5">
+                    <div class="main-pic">
+                        <div id="pic7"></div>
+                    </div>
+                    <div class="title">
+                        <div class="title-txt">
+                            <div id="spot7"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main2">
+                    <div class="main-pic"> 
+                       <div id="pic8"></div>
+                    </div>
+                    <div class="title">
+                        <div class="title-txt">
+                            <div id="spot8"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main3">
+                    <div class="main-pic">
+                        <div id="pic9"></div>
+                    </div>
+                    <div class="title">
+                        <div class="title-txt">
+                            <div id="spot9"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main4">
+                    <div class="main-pic">
+                        <div id="pic10"></div>
+                    </div>
+                    <div class="title">
+                        <div class="title-txt">
+                            <div id="spot10"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function getData(){
+        var request=new XMLHttpRequest();
+        request.open("get","https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment.json")
+        request.onload=function(){
+            var obj=JSON.parse(this.responseText); //把json字串轉為js數值or物件
+            var data=obj.result.results;
+            function spotdata(spot,id){
+                this.stitle=data[spot].stitle;
+                var a=document.createElement("n");
+                a.setAttribute("class","txt");
+                var t=document.createTextNode(this.stitle);
+                a.appendChild(t);
+                document.getElementById(id).appendChild(a);
+            }
+            for(var i=0;i<2;i++){
+                spotdata(i,"spot"+String(i+1));
+            }
+            function spotdata(spot,id){
+                this.stitle=data[spot].stitle;
+                var a=document.createElement("n");
+                a.setAttribute("class","title-txt");
+                var t=document.createTextNode(this.stitle);
+                a.appendChild(t);
+                document.getElementById(id).appendChild(a);
+            }
+            for(var i=2;i<10;i++){
+                spotdata(i,"spot"+String(i+1));
+            }
+            function firstpic(pic,imageid){
+                this.pic=data[pic].file.substring(0,data[pic].file.toLowerCase().indexOf("jpg"))+"jpg";
+                var imageTag=document.createElement("img");
+                imageTag.src=this.pic;
+                imageTag.setAttribute("class","promo-pic");
+                var mg=document.getElementById(imageid);
+                mg.appendChild(imageTag);
+            }
+            for(j=0;j<2;j++){
+                firstpic(j,"pic"+String(j+1));
+            }
+            function secondpic(pic,imageid){
+                this.pic=data[pic].file.substring(0,data[pic].file.toLowerCase().indexOf("jpg"))+"jpg";
+                var imageTag=document.createElement("img");
+                imageTag.src=this.pic;
+                imageTag.setAttribute("class","main-pic");
+                var mg=document.getElementById(imageid);
+                mg.appendChild(imageTag);
+            }
+            for(j=2;j<10;j++){
+                secondpic(j,"pic"+String(j+1));
+            }
+            
+        };
+        request.send();
+    }
+
+</script>
+</body>
+</html>
